@@ -24,7 +24,7 @@ export class AuthService {
 
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
-  private API_KEY = 'AIzaSyD68uFPgqMGKnBpwz9YG62uuTBvAeBITqo';
+  private API_KEY = 'Inser your firebase API key here';
 
   constructor(private http: HttpClient, private router: Router) {
   }
