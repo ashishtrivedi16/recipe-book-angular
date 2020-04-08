@@ -14,6 +14,8 @@ export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
+  // @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective;
+  // private closeSub: Subscription;
 
   constructor(private authService: AuthService, private router: Router) {
   }
@@ -21,8 +23,13 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  onHandleErrorMessage() {
+    this.error = null;
   }
 
   onSubmit(form: NgForm) {
@@ -47,10 +54,24 @@ export class AuthComponent implements OnInit {
       this.router.navigate(['/recipes']);
     }, errorMessage => {
       this.error = errorMessage;
+      // this.showErrorAlert(errorMessage);
       this.isLoading = false;
     });
 
     form.reset();
   }
+
+  // private showErrorAlert(errorMessage: string) {
+  //   const alertCmpFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+  //   const hostViewContainerRef = this.alertHost.viewContainerRef;
+  //   hostViewContainerRef.clear();
+  //
+  //   const componentRef = hostViewContainerRef.createComponent(alertCmpFactory);
+  //   componentRef.instance.message = errorMessage;
+  //   this.closeSub = componentRef.instance.close.subscribe(() => {
+  //     this.closeSub.unsubscribe();
+  //     hostViewContainerRef.clear();
+  //   });
+  // }
 
 }
