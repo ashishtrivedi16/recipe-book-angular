@@ -7,6 +7,10 @@ import {AppRouteModule} from './app-route.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptorService} from './auth/auth-interceptor.service';
 import {SharedModule} from './shared/shared.module';
+import {StoreModule} from '@ngrx/store';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from '../environments/environment';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,9 @@ import {SharedModule} from './shared/shared.module';
     BrowserModule,
     HttpClientModule,
     AppRouteModule,
-    SharedModule
+    SharedModule,
+    StoreModule.forRoot(fromApp.reducer),
+    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production})
   ],
   providers: [
     {
@@ -28,5 +34,6 @@ import {SharedModule} from './shared/shared.module';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
 }

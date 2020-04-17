@@ -4,9 +4,9 @@ import {catchError, tap} from 'rxjs/operators';
 import {BehaviorSubject, throwError} from 'rxjs';
 import {User} from './user.model';
 import {Router} from '@angular/router';
+import {environment} from '../../environments/environment';
 
 export interface AuthResponseData {
-
   kind: string;
   idToken: string;
   email: string;
@@ -14,7 +14,6 @@ export interface AuthResponseData {
   expiresIn: string;
   localId: string;
   registered?: boolean;
-
 }
 
 @Injectable({
@@ -24,13 +23,12 @@ export class AuthService {
 
   user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
-  private API_KEY = 'AIzaSyD68uFPgqMGKnBpwz9YG62uuTBvAeBITqo';
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
   signup(email: string, password: string) {
-    return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + this.API_KEY,
+    return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
       {
         email: email,
         password: password,
@@ -41,11 +39,13 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.API_KEY, {
-      email: email,
-      password: password,
-      returnSecureToken: true,
-    }).pipe(catchError(this.handleError), tap(resData => {
+    return this.http.post<AuthResponseData>(
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
+      {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      }).pipe(catchError(this.handleError), tap(resData => {
       this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
     }));
   }
@@ -99,7 +99,7 @@ export class AuthService {
   }
 
   private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An error error occured';
+    let errorMessage = 'An error has occurred';
     if (!errorRes.error || !errorRes.error.error) {
       return throwError(errorMessage);
     }
