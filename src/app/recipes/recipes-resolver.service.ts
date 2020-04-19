@@ -1,23 +1,51 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Recipe} from './recipe.model';
-import {DataStorageService} from '../shared/data-storage.service';
-import {Observable} from 'rxjs';
-import {RecipeService} from './recipe.service';
+import {of} from 'rxjs';
+import * as fromApp from '../store/app.reducer';
+import {Store} from '@ngrx/store';
+import {map, switchMap, take} from 'rxjs/operators';
+import * as recipeActions from './store/recipes.actions';
+import {Actions, ofType} from '@ngrx/effects';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
-export class RecipesResolverService implements Resolve<Recipe[]> {
-  constructor(private dataStorageService: DataStorageService, private recipeService: RecipeService) {
-  }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe[]> | Promise<Recipe[]> | Recipe[] {
-    const recipes = this.recipeService.getRecipes();
-    if (recipes.length === 0) {
-      return this.dataStorageService.fetchRecipes();
-    } else {
-      return recipes;
+export class RecipesResolverService implements Resolve<{ recipes: Recipe[] }> {
+    constructor(private store: Store<fromApp.AppState>,
+                private actions$: Actions) {
     }
-  }
+
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+        return this.store.select('recipes').pipe(
+            take(1),
+            map(recipeState => recipeState.recipes),
+            switchMap(recipes => {
+                if (recipes.length === 0) {
+                    this.store.dispatch(recipeActions.fecthRecipes());
+                    return this.actions$.pipe(
+                        ofType(recipeActions.setRecipes),
+                        take(1)
+                    );
+                } else {
+                    return of({recipes});
+                }
+            })
+        );
+
+        // return this.store.select('recipes').pipe(
+        //   map(recipes => recipes.recipes),
+        //   tap(recipes => {
+        //     if (recipes.length === 0) {
+        //       this.store.dispatch(recipeActions.fecthRecipes());
+        //       return this.actions$.pipe(
+        //         ofType(recipeActions.setRecipes),
+        //         take(1)
+        //       );
+        //     } else {
+        //       return {recipes};
+        //     }
+        //   })
+        // );
+    }
 }

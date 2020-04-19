@@ -6,14 +6,14 @@ import {SharedModule} from '../shared/shared.module';
 
 
 @NgModule({
-  declarations: [
-    ShoppingListComponent,
-    ShoppingEditComponent,
-  ],
-  imports: [
-    SharedModule,
-    ShoppingListRoute
-  ]
+    declarations: [
+        ShoppingListComponent,
+        ShoppingEditComponent,
+    ],
+    imports: [
+        SharedModule,
+        ShoppingListRoute
+    ]
 })
 export class ShoppingListModule {
 }

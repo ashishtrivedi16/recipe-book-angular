@@ -13,30 +13,32 @@ import {environment} from '../environments/environment';
 import * as fromApp from './store/app.reducer';
 import {EffectsModule} from '@ngrx/effects';
 import {AuthEffects} from './auth/store/auth.effects';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {RecipesEffects} from './recipes/store/recipes.effects';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRouteModule,
-    SharedModule,
-    StoreModule.forRoot(fromApp.reducer),
-    EffectsModule.forRoot([AuthEffects]),
-    StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production})
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    },
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HeaderComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRouteModule,
+        SharedModule,
+        StoreModule.forRoot(fromApp.reducer),
+        EffectsModule.forRoot([AuthEffects, RecipesEffects]),
+        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
+        StoreRouterConnectingModule.forRoot()
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true
+        },
+    ],
+    bootstrap: [AppComponent]
 })
-
 export class AppModule {
 }

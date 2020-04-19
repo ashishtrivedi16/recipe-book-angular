@@ -6,25 +6,25 @@ import {startedEditing} from './store/shopping-list.actions';
 import * as fromApp from '../store/app.reducer';
 
 @Component({
-  selector: 'app-shopping-list',
-  templateUrl: './shopping-list.component.html',
-  styleUrls: ['./shopping-list.component.css']
+    selector: 'app-shopping-list',
+    templateUrl: './shopping-list.component.html',
+    styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
-  ingredients: Observable<{ ingredients: Ingredient[], editIndex: number }>;
+    ingredients: Observable<{ ingredients: Ingredient[], editIndex: number }>;
 
-  constructor(private store: Store<fromApp.AppState>) {
-  }
+    constructor(private store: Store<fromApp.AppState>) {
+    }
 
-  ngOnInit(): void {
-    this.ingredients = this.store.pipe(select('shoppingList'));
-  }
+    ngOnInit(): void {
+        this.ingredients = this.store.pipe(select('shoppingList'));
+    }
 
-  ngOnDestroy(): void {
-  }
+    ngOnDestroy(): void {
+    }
 
-  onEditItem(index: number) {
-    this.store.dispatch(startedEditing({editIndex: index}));
-  }
+    onEditItem(index: number) {
+        this.store.dispatch(startedEditing({editIndex: index}));
+    }
 }

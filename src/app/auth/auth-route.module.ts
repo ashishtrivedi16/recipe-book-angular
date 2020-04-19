@@ -4,15 +4,15 @@ import {AuthComponent} from './auth.component';
 
 
 const appRoutes: Routes = [
-  {
-    path: '',
-    component: AuthComponent
-  },
+    {
+        path: '',
+        component: AuthComponent
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(appRoutes)],
+    exports: [RouterModule]
 })
 export class AuthRouteModule {
 

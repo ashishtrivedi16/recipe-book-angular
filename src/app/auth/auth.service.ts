@@ -4,25 +4,25 @@ import * as AuthActions from './store/auth.actions';
 import {Store} from '@ngrx/store';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
-  private tokenExpirationTimer: any;
+    private tokenExpirationTimer: any;
 
-  constructor(private store: Store<fromApp.AppState>) {
-  }
-
-  setLogoutTimer(expirationDuration: number) {
-    this.tokenExpirationTimer = setTimeout(() => {
-      this.store.dispatch(AuthActions.logout());
-    }, expirationDuration);
-  }
-
-  clearLogoutTimer() {
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-      this.tokenExpirationTimer = null;
+    constructor(private store: Store<fromApp.AppState>) {
     }
-  }
+
+    setLogoutTimer(expirationDuration: number) {
+        this.tokenExpirationTimer = setTimeout(() => {
+            this.store.dispatch(AuthActions.logout());
+        }, expirationDuration);
+    }
+
+    clearLogoutTimer() {
+        if (this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer);
+            this.tokenExpirationTimer = null;
+        }
+    }
 }

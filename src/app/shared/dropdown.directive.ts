@@ -1,21 +1,21 @@
 import {Directive, HostBinding, HostListener} from '@angular/core';
 
 @Directive({
-  selector: '[appDropdown]'
+    selector: '[appDropdown]'
 })
 export class DropdownDirective {
 
-  @HostBinding('class.open') private isMouseOver = false;
+    @HostBinding('class.open') private isMouseOver = false;
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  @HostListener('mouseenter') onMouseEnter() {
-    this.isMouseOver = true;
-  }
+    @HostListener('mouseenter') onMouseEnter() {
+        this.isMouseOver = true;
+    }
 
-  @HostListener('mouseleave') onMouseLeave() {
-    this.isMouseOver = false;
-  }
+    @HostListener('mouseleave') onMouseLeave() {
+        this.isMouseOver = false;
+    }
 
 }

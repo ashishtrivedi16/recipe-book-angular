@@ -6,24 +6,24 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AlertComponent,
-    LoadingSpinnerComponent,
-    DropdownDirective
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  exports: [
-    AlertComponent,
-    LoadingSpinnerComponent,
-    DropdownDirective,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule
-  ]
+    declarations: [
+        AlertComponent,
+        LoadingSpinnerComponent,
+        DropdownDirective
+    ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule
+    ],
+    exports: [
+        AlertComponent,
+        LoadingSpinnerComponent,
+        DropdownDirective,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class SharedModule {
 

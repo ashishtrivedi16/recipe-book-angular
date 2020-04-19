@@ -4,15 +4,15 @@ import {ShoppingListComponent} from './shopping-list.component';
 
 
 const appRoutes: Routes = [
-  {
-    path: '',
-    component: ShoppingListComponent
-  },
+    {
+        path: '',
+        component: ShoppingListComponent
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(appRoutes)],
+    exports: [RouterModule]
 })
 export class ShoppingListRoute {
 
